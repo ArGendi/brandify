@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: product.image != null ? NetworkImage(product.image!) : AssetImage("assets/images/deafult.jpeg"),
+              image: product.image != null ? FileImage(File(product.image!)) : AssetImage("assets/images/default.png"),
             ),
           ),
           child: Padding(
@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.white.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(

@@ -126,8 +126,6 @@ class _SidesScreenState extends State<SidesScreen> {
                         SizedBox(
                           width: 1,
                         ),
-                        if (FirebaseAuth.instance.currentUser!.email! ==
-                            "jee@ag.com")
                           IconButton(
                             onPressed: () {
                               SidesCubit.get(context).remove(i);

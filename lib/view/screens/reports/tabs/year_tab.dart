@@ -21,7 +21,7 @@ class _YearTabState extends State<YearTab> {
     // TODO: implement initState
     super.initState();
     List<Sell> all = AllSellsCubit.get(context).sells;
-    ReportsCubit.get(context).setYearReport(all);
+    //ReportsCubit.get(context).setYearReport(all);
   }
 
   @override
@@ -34,17 +34,17 @@ class _YearTabState extends State<YearTab> {
             children: [
               GestureDetector(
                 onTap: () {
-                  if(ReportsCubit.get(context).year!.sells.isNotEmpty)
+                  if(ReportsCubit.get(context).threeMonths!.sells.isNotEmpty)
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (_) => AllSellsScreen(
-                                sells: ReportsCubit.get(context).year!.sells,
+                                sells: ReportsCubit.get(context).threeMonths!.sells,
                               )));
                 },
                 child: ReportCard(
                   text: "Number of sells",
-                  quantity: ReportsCubit.get(context).year?.noOfSells ?? 0,
+                  quantity: ReportsCubit.get(context).threeMonths?.noOfSells ?? 0,
                 ),
               ),
               SizedBox(
@@ -52,14 +52,14 @@ class _YearTabState extends State<YearTab> {
               ),
               ReportCard(
                   text: "Total income",
-                  quantity: ReportsCubit.get(context).year?.totalIncome ?? 0),
+                  quantity: ReportsCubit.get(context).threeMonths?.totalIncome ?? 0),
               SizedBox(
                 height: 15,
               ),
               ReportCard(
                 text: "Profit",
-                quantity: ReportsCubit.get(context).year?.totalProfit ?? 0,
-                color: (ReportsCubit.get(context).year?.totalProfit ?? 0) >= 0
+                quantity: ReportsCubit.get(context).threeMonths?.totalProfit ?? 0,
+                color: (ReportsCubit.get(context).threeMonths?.totalProfit ?? 0) >= 0
                     ? Colors.green.shade600
                     : Colors.red.shade600,
               ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:tabe3/constants.dart';
 
@@ -13,7 +15,8 @@ class CustomTextFormField extends StatefulWidget {
   final String? suffixText;
   final bool obscureText;
   final String? hintText;
-  const CustomTextFormField({super.key, required this.text, required this.onSaved, this.maxLines = 1, this.onValidate, this.keyboardType = TextInputType.text, this.initial, this.prefix, this.suffixText, this.obscureText = false, this.hintText, this.onChange});
+  final TextEditingController? controller;
+  const CustomTextFormField({super.key, required this.text, required this.onSaved, this.maxLines = 1, this.onValidate, this.keyboardType = TextInputType.text, this.initial, this.prefix, this.suffixText, this.obscureText = false, this.hintText, this.onChange, this.controller});
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -31,7 +34,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.initial.toString());
+    log(widget.controller.toString());
     return TextFormField(
+      controller: widget.controller,
       onChanged: widget.onChange,
       cursorColor: mainColor,
       obscureText: visible,

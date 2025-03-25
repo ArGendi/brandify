@@ -5,3 +5,4 @@ sealed class ReportsState {}
 
 final class ReportsInitial extends ReportsState {}
 final class GetReportState extends ReportsState {}
+final class SellRemovedFromReportState extends ReportsState {}

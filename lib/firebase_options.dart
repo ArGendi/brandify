@@ -50,20 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBLTBFryuTZCWbVnQGCuxXJHX7N0BNLMrw',
-    appId: '1:207355872824:android:21e3753ae34f0fe16508cd',
-    messagingSenderId: '207355872824',
-    projectId: 'dotdot-b1e02',
-    storageBucket: 'dotdot-b1e02.appspot.com',
+    apiKey: 'AIzaSyBvlgfBKFetaKPnbasL9XZEhoASvC0hNW0',
+    appId: '1:952251438505:android:4480019a5ed50d8db020b8',
+    messagingSenderId: '952251438505',
+    projectId: 'fetarna-a11e1',
+    storageBucket: 'fetarna-a11e1.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCIBIJRFPev6HRCHqzJLqb_-KLcf_L8QOI',
-    appId: '1:207355872824:ios:d3dd65d2a63cb0c76508cd',
-    messagingSenderId: '207355872824',
-    projectId: 'dotdot-b1e02',
-    storageBucket: 'dotdot-b1e02.appspot.com',
-    androidClientId: '207355872824-7q6925q0asqqn1b8ne3drsbthmulci2n.apps.googleusercontent.com',
-    iosBundleId: 'com.example.tabe3',
+    apiKey: 'AIzaSyBI4yTwbITCN0wVy15AloDHXVkhUqadFXc',
+    appId: '1:952251438505:ios:91a9eec638ba1471b020b8',
+    messagingSenderId: '952251438505',
+    projectId: 'fetarna-a11e1',
+    storageBucket: 'fetarna-a11e1.firebasestorage.app',
+    iosClientId: '952251438505-v6skaq6g896bamgba4nmveskh73m8166.apps.googleusercontent.com',
+    iosBundleId: 'com.argendi.brandify',
   );
+
 }

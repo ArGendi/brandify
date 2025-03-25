@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' as c;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tabe3/constants.dart';
@@ -11,6 +13,7 @@ import 'package:tabe3/models/size.dart';
 import 'package:tabe3/view/screens/products/products_screen.dart';
 import 'package:tabe3/view/widgets/custom_button.dart';
 import 'package:tabe3/view/widgets/custom_texfield.dart';
+// import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class AddProductScreen extends StatefulWidget {
   final Product? product;
@@ -54,11 +57,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           return Container(
                             width: double.infinity,
                             height: 180,
-                            color: mainColor,
-                            child: AddProductCubit.get(context).image == null
+                            decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: AddProductCubit.get(context).product.image ==
+                                    null
                                 ? Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.add,
@@ -70,11 +75,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       )
                                     ],
                                   )
-                                : Image.file(
-                                    AddProductCubit.get(context).image!,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 180,
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(
+                                      File(AddProductCubit.get(context)
+                                          .product
+                                          .image!),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 180,
+                                    ),
                                   ),
                           );
                         },
@@ -83,9 +93,64 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     SizedBox(
                       height: 15,
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: BlocBuilder<AddProductCubit, AddProductState>(
+                            builder: (context, state) {
+                              print(state);
+                              return CustomTextFormField(
+                                controller: AddProductCubit.get(context).codeController,
+                                // initial:
+                                //     AddProductCubit.get(context).product.code,
+                                text: "Code",
+                                onSaved: (value) {
+                                  AddProductCubit.get(context).product.code =
+                                      value;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            // var res = await Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) =>
+                            //           const SimpleBarcodeScannerPage(),
+                            //     ));
+                            // if (res is String) {
+                            //   log("barcode: $res");
+                            // if(res != "-1"){
+                            //   AddProductCubit.get(context).setCode(res);
+                            // }
+                            // }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: mainColor),
+                            child: Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: Text(
+                                "𝄃𝄃𝄃𝄂",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     CustomTextFormField(
                       initial: AddProductCubit.get(context).product.name,
-                      text: "Name",
+                      text: "Name*",
                       onSaved: (value) {
                         AddProductCubit.get(context).product.name = value;
                       },
@@ -108,7 +173,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   .toString()
                               : null,
                       keyboardType: TextInputType.number,
-                      text: "Price",
+                      text: "Price*",
                       onSaved: (value) {
                         if (value!.isNotEmpty) {
                           AddProductCubit.get(context).product.price =
@@ -135,20 +200,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               children: [
                                 Expanded(
                                   child: CustomTextFormField(
-                                    initial: AddProductCubit.get(context)
-                                        .product
-                                        .sizes[i]
-                                        .name,
+                                    controller: AddProductCubit.get(context)
+                                        .sizesControllers[i]
+                                        .sizeController,
                                     text: "Size",
-                                    onSaved: (value) {
-                                      AddProductCubit.get(context)
-                                          .product
-                                          .sizes[i]
-                                          .name = value;
-                                    },
-                                    // onChange: (value){
-                                    //   AddProductCubit.get(context).product.sizes[i].name = value;
-                                    // },
+                                    onSaved: (value) {},
                                   ),
                                 ),
                                 SizedBox(
@@ -156,28 +212,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 ),
                                 Expanded(
                                   child: CustomTextFormField(
-                                    initial: AddProductCubit.get(context)
-                                                .product
-                                                .sizes[i]
-                                                .quantity !=
-                                            null
-                                        ? AddProductCubit.get(context)
-                                            .product
-                                            .sizes[i]
-                                            .quantity
-                                            .toString()
-                                        : null,
+                                    controller: AddProductCubit.get(context)
+                                        .sizesControllers[i]
+                                        .quantityController,
                                     keyboardType: TextInputType.number,
                                     text: "Quantity",
-                                    onSaved: (value) {
-                                      AddProductCubit.get(context)
-                                          .product
-                                          .sizes[i]
-                                          .quantity = int.parse(value!);
-                                    },
-                                    // onChange: (value){
-                                    //   AddProductCubit.get(context).product.sizes[i].quantity = int.parse(value!);
-                                    // },
+                                    onSaved: (value) {},
                                   ),
                                 ),
                                 if (i != 0)
@@ -185,17 +225,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     width: 10,
                                   ),
                                 if (i != 0)
-                                  CircleAvatar(
-                                    backgroundColor: Colors.red,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        AddProductCubit.get(context)
-                                            .removeSize(i);
-                                      },
-                                      icon: Icon(
-                                        Icons.clear,
-                                        color: Colors.white,
-                                      ),
+                                  IconButton(
+                                    onPressed: () {
+                                      AddProductCubit.get(context)
+                                          .removeSize(i);
+                                    },
+                                    icon: Icon(
+                                      Icons.clear,
+                                      size: 15,
+                                      color: Colors.red,
                                     ),
                                   ),
                               ],
@@ -204,43 +242,49 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           separatorBuilder: (context, i) => SizedBox(
                             height: 10,
                           ),
-                          itemCount: AddProductCubit.get(context)
-                              .product
-                              .sizes
-                              .length,
+                          itemCount:
+                              AddProductCubit.get(context).product.sizes.length,
                         );
                       },
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    CustomButton(
-                      text: "Add another size",
-                      onPressed: () {
-                        AddProductCubit.get(context).addSize();
-                      },
-                      bgColor: Colors.black,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomButton(
+                        text: "Add another size",
+                        onPressed: () {
+                          AddProductCubit.get(context).addSize();
+                        },
+                        bgColor: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
               ),
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  if(state is LoadingEditProductState || state is LoadingOneProductState){
-                    return Center(child: CircularProgressIndicator(color: mainColor,),);
-                  }
-                  else{
+                  if (state is LoadingEditProductState ||
+                      state is LoadingOneProductState) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: mainColor,
+                      ),
+                    );
+                  } else {
                     return CustomButton(
                       text: widget.product == null ? "Add" : "Edit",
                       onPressed: () async {
-                        Product? product =
-                            await AddProductCubit.get(context).onDone(context);
+                        Product? product = await AddProductCubit.get(context)
+                            .validate(context);
                         if (product != null) {
                           if (widget.product == null) {
-                            ProductsCubit.get(context).addProduct(product, context);
-                            
+                            ProductsCubit.get(context)
+                                .addProduct(product, context);
                           } else {
-                            ProductsCubit.get(context).editProduct(product, context);
+                            ProductsCubit.get(context)
+                                .editProduct(widget.product!, product, context);
                           }
                         }
                       },
@@ -282,7 +326,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     text: "Photos",
                     onPressed: () {
                       AddProductCubit.get(context)
-                          .getImage(ImageSource.gallery, context);
+                          .getImage(ImageSource.gallery);
                       Navigator.pop(context);
                     },
                   ),
@@ -296,7 +340,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     text: "Camera",
                     onPressed: () {
-                      AddProductCubit.get(context).getImage(ImageSource.camera, context);
+                      AddProductCubit.get(context).getImage(ImageSource.camera);
                       Navigator.pop(context);
                     },
                   ),

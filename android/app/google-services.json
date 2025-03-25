@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "207355872824",
-    "project_id": "dotdot-b1e02",
-    "storage_bucket": "dotdot-b1e02.appspot.com"
+    "project_number": "952251438505",
+    "project_id": "fetarna-a11e1",
+    "storage_bucket": "fetarna-a11e1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:207355872824:android:21e3753ae34f0fe16508cd",
+        "mobilesdk_app_id": "1:952251438505:android:4480019a5ed50d8db020b8",
         "android_client_info": {
-          "package_name": "com.argendi.tabe3"
+          "package_name": "com.argendi.brandify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "207355872824-og476v0trps5asj3hnca44hf76gdc4bp.apps.googleusercontent.com",
+          "client_id": "952251438505-vvuamafnp7s16suq7e4gnerbcb39pjn8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLTBFryuTZCWbVnQGCuxXJHX7N0BNLMrw"
+          "current_key": "AIzaSyBvlgfBKFetaKPnbasL9XZEhoASvC0hNW0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "207355872824-og476v0trps5asj3hnca44hf76gdc4bp.apps.googleusercontent.com",
+              "client_id": "952251438505-vvuamafnp7s16suq7e4gnerbcb39pjn8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "952251438505-0hmjlr1p57i2qka0q9oiu5k729p744d4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tabe3"
+              }
             }
           ]
         }

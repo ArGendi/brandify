@@ -37,7 +37,7 @@ abstract class FirestoreServices{
         Map<String, dynamic> map = doc.data();
         log(map.toString());
         var p = Product.fromJson(map);
-        p.id = doc.id;
+        //p.id = doc.id;
         products.add(p);
       }
       return Data<List<Product>>(products, Status.success);
@@ -54,7 +54,7 @@ abstract class FirestoreServices{
       for(var doc in snapshot.docs){
         Map<String, dynamic> map = doc.data();
         var temp = Side.fromJson(map);
-        temp.id = doc.id;
+        //temp.id = doc.id;
         sides.add(temp);
       }
       return Data<List<Side>>(sides, Status.success);
@@ -71,7 +71,7 @@ abstract class FirestoreServices{
       for(var doc in snapshot.docs){
         Map<String, dynamic> map = doc.data();
         var temp = Sell.fromJson(map);
-        temp.id = doc.id;
+        //temp.id = doc.id;
         sells.add(temp);
       }
       return Data<List<Sell>>(sells, Status.success);

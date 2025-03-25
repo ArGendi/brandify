@@ -3,7 +3,7 @@ class ProductSize{
   int? quantity;
 
   ProductSize({this.name, this.quantity});
-  ProductSize.fromJson(Map<String, dynamic> json){
+  ProductSize.fromJson(Map<dynamic, dynamic> json){
     name = json["name"];
     quantity = json["quantity"];
   }

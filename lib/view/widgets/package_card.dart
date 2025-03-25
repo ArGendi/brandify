@@ -33,7 +33,7 @@ class _PackageCardState extends State<PackageCard> {
           color: widget.bgColor,
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            opacity: 0.20,
+            opacity: 0.08,
             fit: BoxFit.cover,
             image: AssetImage(widget.image),
           )

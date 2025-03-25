@@ -10,3 +10,4 @@ final class GetImageState extends AddProductState {}
 class LoadingProductState extends AddProductState {}
 class SuccessProductState extends AddProductState {}
 class FailProductState extends AddProductState {}
+class ProductChangedState extends AddProductState {}

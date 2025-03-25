@@ -8,46 +8,27 @@ class ReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.deepPurple.shade700,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+    return Row(
+      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              text,
+              style: TextStyle(
               ),
             ),
           ),
-          Container(
-            //width: 50,
-            //height: 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8)
-            ),
-            child: Padding(
-             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              child: Text(
-                quantity.toString(),
-                style: TextStyle(
-                  color: color,
-                ),
-              ),
-            ),
+        ),
+        Text(
+          quantity.toString(),
+          style: TextStyle(
+            color: color,
           ),
-          SizedBox(width: 8,)
-        ],
-      ),
+        ),
+        SizedBox(width: 8,)
+      ],
     );
   }
 }

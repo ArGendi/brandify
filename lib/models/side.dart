@@ -1,11 +1,11 @@
 class Side{
-  String? id;
+  int? id;
   String? name;
   int? price;
   int? quantity;
 
   Side({this.name, this.price, this.quantity});
-  Side.fromJson(Map<String, dynamic> json){
+  Side.fromJson(Map<dynamic, dynamic> json){
     name = json["name"];
     price = json["price"];
     quantity = json["quantity"];

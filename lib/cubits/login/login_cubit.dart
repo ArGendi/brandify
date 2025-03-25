@@ -10,17 +10,18 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late String email;
+  late String phone;
   late String password;
 
   LoginCubit() : super(LoginInitial());
+  static LoginCubit get(BuildContext context) => BlocProvider.of(context);
 
   void onLogin(BuildContext context) async{
     bool valid = formKey.currentState!.validate();
     if(valid){
       formKey.currentState!.save();
       emit(LoadingState());
-      var response = await AuthServices.login(email, password);
+      var response = await AuthServices.login(phone, password);
       if(response.status == Status.success){
         emit(SuccessState());
         Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));

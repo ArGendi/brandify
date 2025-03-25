@@ -2,13 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabe3/constants.dart';
+import 'package:tabe3/cubits/ads/ads_cubit.dart';
 import 'package:tabe3/cubits/all_sells/all_sells_cubit.dart';
 import 'package:tabe3/cubits/products/products_cubit.dart';
 import 'package:tabe3/cubits/sell/sell_cubit.dart';
 import 'package:tabe3/cubits/sides/sides_cubit.dart';
-import 'package:tabe3/view/screens/best_worst_screen.dart';
+import 'package:tabe3/view/screens/ads_screen.dart';
+import 'package:tabe3/view/screens/all_ads_screen.dart';
+import 'package:tabe3/view/screens/best_products_screen.dart';
 import 'package:tabe3/view/screens/calculate_percent_screen.dart';
-import 'package:tabe3/view/screens/login_screen.dart';
+import 'package:tabe3/view/screens/auth/login_screen.dart';
+import 'package:tabe3/view/screens/lowest_products_screen.dart';
 import 'package:tabe3/view/screens/products/products_screen.dart';
 import 'package:tabe3/view/screens/reports/reports_screen.dart';
 import 'package:tabe3/view/screens/sides_screen.dart';
@@ -27,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    AllSellsCubit.get(context).getSells();
+    int adsCost = AdsCubit.get(context).getAllAds();
+    AllSellsCubit.get(context).getSells(ads: adsCost);
     ProductsCubit.get(context).getProducts();
     SidesCubit.get(context).getAllSides();
   }
@@ -36,18 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            FirebaseAuth.instance.signOut();
-            Navigator.pushAndRemoveUntil(
-              context, 
-              MaterialPageRoute(builder: (_) => LoginScreen()), 
-              (route) => false,
-            );
-          },
-          icon: Icon(Icons.exit_to_app),
-        ),
-        title: Text("Tabe3"),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     FirebaseAuth.instance.signOut();
+        //     Navigator.pushAndRemoveUntil(
+        //       context, 
+        //       MaterialPageRoute(builder: (_) => LoginScreen()), 
+        //       (route) => false,
+        //     );
+        //   },
+        //   icon: Icon(Icons.exit_to_app),
+        // ),
+        title: Text("Brandify"),
         actions: [
           IconButton(
             onPressed: () {
@@ -59,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+        child: ListView(
           children: [
             PackageCard(
               text: "My Prodcuts",
@@ -81,32 +86,76 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => SidesScreen()));
               },
-              bgColor: Colors.blue.shade900,
+              bgColor: mainColor,
             ),
             SizedBox(
               height: 10,
             ),
-            PackageCard(
-              text: "Reports",
-              image: "assets/images/analysis.jpg",
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ReportsScreen()));
-              },
-              bgColor: Colors.deepPurple.shade700,
+            Row(
+              children: [
+                Expanded(
+                  child: PackageCard(
+                    text: "Reports",
+                    image: "assets/images/analysis.jpg",
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ReportsScreen()));
+                    },
+                    bgColor: mainColor,
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Expanded(
+                  child: PackageCard(
+                    text: "Ads",
+                    image: "assets/images/analysis.jpg",
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => AllAdsScreen()));
+                    },
+                    bgColor: mainColor,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-            // PackageCard(
-            //   text: "قرب يخلص",
-            //   image: "assets/images/b_w.jpg",
-            //   onTap: () {
-            //     Navigator.push(context,
-            //         MaterialPageRoute(builder: (_) => BestWorstScreen()));
-            //   },
-            //   bgColor: Colors.black,
+            // SizedBox(
+            //   height: 10,
             // ),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: PackageCard(
+            //         text: "Best",
+            //         image: "assets/images/b_w.jpg",
+            //         onTap: () {
+            //           Navigator.push(context,
+            //               MaterialPageRoute(builder: (_) => BestProductsScreen()));
+            //         },
+            //         bgColor: mainColor,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     Expanded(
+            //       child: PackageCard(
+            //         text: "Lowest",
+            //         image: "assets/images/b_w.jpg",
+            //         onTap: () {
+            //           Navigator.push(context,
+            //             MaterialPageRoute(builder: (_) => lowestProductsScreen()));
+            //         },
+            //         bgColor: mainColor,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -134,26 +183,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BlocBuilder<AllSellsCubit, AllSellsState>(
                         builder: (context, state) {
-                          if(state is AllSellsInitial){
-                            return Text(
-                              "Waiting..",
-                              style: TextStyle(
-                                //color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                              ),
-                            );
-                          }
-                          else{
-                            return Text(
-                              AllSellsCubit.get(context).total.toString(),
-                              style: TextStyle(
-                                //color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                              ),
-                            );
-                          }
+                          return Text(
+                            AllSellsCubit.get(context).total.toString(),
+                            style: TextStyle(
+                              //color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -171,17 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BlocBuilder<AllSellsCubit, AllSellsState>(
                         builder: (context, state) {
-                          if(state is AllSellsInitial){
-                            return Text(
-                              "Waiting..",
-                              style: TextStyle(
-                                //color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                              ),
-                            );
-                          }
-                          else return Text(
+                          return Text(
                             AllSellsCubit.get(context).totalProfit.toString(),
                             style: TextStyle(
                               color: AllSellsCubit.get(context).totalProfit >= 0? 

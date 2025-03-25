@@ -1,0 +1,2 @@
+D:/brandify/android/app/.cxx/Debug/353l481t/x86/CMakeFiles/edit_cache.dir
+D:/brandify/android/app/.cxx/Debug/353l481t/x86/CMakeFiles/rebuild_cache.dir
